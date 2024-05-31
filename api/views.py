@@ -1,14 +1,18 @@
 from rest_framework.response import Response
 from rest_framework import viewsets, status
 from .serializer import AreaSerializer, CanalSerializer, CronogramaPagosSerializer, CuotaSerializer, EstadoSerializer, LoteSerializer, ManzanaSerializer, MedioSerializer, ObservacionesSerializer, OrigenSerializer, PersonaProyectoSerializer, RolSerializer
-from .serializer import ProyectoSerializer
+from .serializer import ProyectoSerializer, ProyectoConManzanasSerializer
 from .serializer import PersonaSerializer
 from .models import Area, Canal, CronogramaPagos, Cuota, Estado, Lote, Manzana, Medio, Observaciones, Origen, Persona, PersonaProyecto, Rol
 from .models import Proyecto
 from rest_framework.views import APIView
 
 
-
+class ProyectoConManzanasView(APIView):
+    def get(self, request, format=None):
+        proyectos = Proyecto.objects.all()
+        serializer = ProyectoConManzanasSerializer(proyectos, many=True)
+        return Response(serializer.data)
     
 
 # View del modelo Proyecto

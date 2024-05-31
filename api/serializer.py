@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import Area, Canal, CronogramaPagos, Cuota, Estado, Lote, Manzana, Medio, Observaciones, Origen, Persona, PersonaProyecto, Rol, Proyecto
 
+
+
 # Serializer del modelo Area
 class AreaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -113,6 +115,23 @@ class ProyectoSerializer(serializers.ModelSerializer):
             'fecha_fin',
             # 'id_manzana'
         ]
+
+
+# Serializer del modelo Proyecto con Manzanas anidadas
+class ProyectoConManzanasSerializer(serializers.ModelSerializer):
+    id_manzana = ManzanaSerializer(many=True, source='manzana_set')
+
+    class Meta:
+        model = Proyecto
+        fields = [
+            'id_proyecto',
+            'nombre_proyecto',
+            'fecha_inicio',
+            'fecha_fin',
+            'id_manzana'
+        ]
+
+
 
 
 # Serializer del modelo PersonaProyecto
